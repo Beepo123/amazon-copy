@@ -1,4 +1,4 @@
-export const cart = [];
+export const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 export function addToCart(productId, productQuantity){
     // If the product is already in cart increase item quantity
@@ -6,7 +6,6 @@ export function addToCart(productId, productQuantity){
     for (let i = 0; i < cart.length; i++) {
         if (cart[i].productId === productId) {
             cart[i].quantity += productQuantity;
-            console.log(cart);
             foundMatch = true;
         }
     }
@@ -19,5 +18,15 @@ export function addToCart(productId, productQuantity){
         cart.push(item);
         console.log(cart);
     }
+    localStorage.setItem('cart', JSON.stringify(cart))
 }
 
+export function deleteFromCart(productId){
+    for(let i = 0; i < cart.length; i++){
+        if(cart[i].productId === productId){
+            cart.splice(i, 1);
+            break;
+        }
+    }
+    localStorage.setItem('cart', JSON.stringify(cart))
+}

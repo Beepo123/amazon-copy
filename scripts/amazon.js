@@ -1,5 +1,6 @@
 import { cart, addToCart } from "../data/cart.js";
 import { products } from "../data/products.js";
+import { centsToDollars } from "../data/utils/money.js";
 
 let productsDiv = "";
 
@@ -24,7 +25,7 @@ products.forEach((product) => {
         </div>
 
         <div class="product-price">
-            $${(product.priceCents / 100).toFixed(2)}
+            $${centsToDollars(product.priceCents)}
         </div>
 
         <div class="product-quantity-container">
@@ -59,14 +60,12 @@ products.forEach((product) => {
 });
 document.querySelector(".products-grid").innerHTML = productsDiv;
 
-export function updateCartQuantity(productId) {
     // Add new items to cart and reset quantity selector
     document.querySelector(`.js-quantity-selector-${productId}`).value = 1;
     let cartQuantity = 0;
     cart.forEach(item => {
         cartQuantity += item.quantity;
     });
-    console.log(`total cart items: ${cartQuantity}`)
     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
 
