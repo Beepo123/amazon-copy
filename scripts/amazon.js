@@ -1,4 +1,8 @@
+import { cart } from "../data/cart.js";
+import { products } from "../data/products.js";
+
 let productsDiv = "";
+
 products.forEach((product) => {
   let html = `
     <div class="product-container">
@@ -20,11 +24,11 @@ products.forEach((product) => {
         </div>
 
         <div class="product-price">
-            ${(product.priceCents / 100).toFixed(2)}
+            $${(product.priceCents / 100).toFixed(2)}
         </div>
 
         <div class="product-quantity-container">
-            <select class="js-item-quantity">
+            <select class="js-quantity-selector-${product.id}">
             <option selected value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -40,13 +44,13 @@ products.forEach((product) => {
 
         <div class="product-spacer"></div>
 
-        <div class="added-to-cart">
+        <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
         </div>
 
         <button class="add-to-cart-button js-add-to-cart button-primary"
-            data-product-name="${product.name}">
+            data-product-id="${product.id}">
             Add to Cart
         </button>
     </div>
@@ -60,10 +64,42 @@ document.querySelector(".products-grid").innerHTML = productsDiv;
 document.querySelectorAll('.js-add-to-cart')
     .forEach(button => {
         button.addEventListener('click', () => {
-            let productName = button.dataset.productName;
-            let item = {
-                productName : productName,
-                quantity : 1,
+            const { productId } = button.dataset
+            let productQuantity = parseInt(document.querySelector(`.js-quantity-selector-${productId}`).value);
+
+            // If the product is already in cart increase item quantity
+            let foundMatch = false;
+            for (let i = 0; i < cart.length; i++) {
+                if (cart[i].productId === productId) {
+                    cart[i].quantity += productQuantity;
+                    console.log(cart);
+                    foundMatch = true;
+                }
             }
+            // If the product is not in the cart, add a new item
+            if(!foundMatch){
+                let item = {
+                    productId,
+                    quantity: productQuantity,
+                };
+                cart.push(item);
+                console.log(cart);
+            }
+
+            // Display added text for 3 seconds
+            const addedText = document.querySelector(`.js-added-to-cart-${productId}`);
+            addedText.style.opacity = 1;
+            setTimeout(() => {
+                addedText.style.opacity = 0;
+            }, 2000)
+
+            // Add new items to cart and reset quantity selector
+            document.querySelector(`.js-quantity-selector-${productId}`).value = 1;
+            let cartQuantity = 0;
+            cart.forEach(item => {
+                cartQuantity += item.quantity;
+            });
+            console.log(`total cart items: ${cartQuantity}`)
+            document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
         });
     });
