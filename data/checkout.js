@@ -1,7 +1,6 @@
 import { cart, deleteFromCart } from "./cart.js";
 import { products } from "./products.js";
 import { centsToDollars } from "./utils/money.js";
-import { updateCartQuantity } from "../scripts/amazon.js";
 
 renderCheckoutPage();
 
@@ -97,6 +96,7 @@ function renderCheckoutPage(){
     document.querySelector('.js-checkout-quantity').innerHTML = cart.length;
 }
 
+// Event listener for deleting item in cart in checkout page
 document.querySelector('.order-summary').addEventListener('click', (event) => {
         const deleteButton = event.target.closest('.js-delete-link');
 

@@ -3,7 +3,6 @@ import { products } from "../data/products.js";
 import { centsToDollars } from "../data/utils/money.js";
 
 let productsDiv = "";
-
 products.forEach((product) => {
   let html = `
     <div class="product-container">
@@ -60,14 +59,23 @@ products.forEach((product) => {
 });
 document.querySelector(".products-grid").innerHTML = productsDiv;
 
+
+// Load correct cart quantity on web load
+updateCartQuantity();
+function updateCartQuantity(productId) {
+    // At start of webpage
+    if(productId){
+        document.querySelector(`.js-quantity-selector-${productId}`).value = 1;
+    }
+
     // Add new items to cart and reset quantity selector
-    document.querySelector(`.js-quantity-selector-${productId}`).value = 1;
     let cartQuantity = 0;
     cart.forEach(item => {
         cartQuantity += item.quantity;
     });
     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
+
 
 document.querySelectorAll('.js-add-to-cart')
     .forEach(button => {

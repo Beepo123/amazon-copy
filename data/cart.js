@@ -18,7 +18,7 @@ export function addToCart(productId, productQuantity){
         cart.push(item);
         console.log(cart);
     }
-    localStorage.setItem('cart', JSON.stringify(cart))
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 export function deleteFromCart(productId){
