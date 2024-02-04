@@ -30,3 +30,11 @@ export function deleteFromCart(productId){
     }
     localStorage.setItem('cart', JSON.stringify(cart))
 }
+
+export function getCartLength(){
+    let totalItems = 0;
+    cart.forEach(product => {
+      totalItems += product.quantity;
+    })
+    return totalItems;
+  }

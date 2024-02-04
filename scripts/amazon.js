@@ -2,6 +2,7 @@ import { cart, addToCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { centsToDollars } from "../data/utils/money.js";
 
+
 let productsDiv = "";
 products.forEach((product) => {
   let html = `
