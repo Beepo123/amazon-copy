@@ -129,7 +129,10 @@ document.querySelector(".order-summary").addEventListener("click", (event) => {
   }
 
   // Updating delivery date for items
-  updateDeliveryDates();
+  const dateButton = event.target.closest(".delivery-option-input");
+  if(dateButton){
+    updateDeliveryDates();
+  }
 });
 
 function updateDeliveryDates(){
@@ -144,4 +147,5 @@ function updateDeliveryDates(){
       }
     })
   })
+  console.log('date updated');
 }
