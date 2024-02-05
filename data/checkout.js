@@ -1,6 +1,8 @@
 import { cart, deleteFromCart, getCartLength } from "./cart.js";
 import { products } from "./products.js";
 import { centsToDollars } from "./utils/money.js";
+import  dayjs  from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import { deliveryOptionHTML } from "./utils/deliveryOptions.js";
 
 document.addEventListener('DOMContentLoaded', ()=>{
   renderCheckoutPage();
@@ -54,51 +56,7 @@ function renderCheckoutPage() {
                       <div class="delivery-options-title">
                         Choose a delivery option:
                       </div>
-
-                      <div class="delivery-option">
-                        <input type="radio" checked
-                          class="delivery-option-input"
-                          name="delivery-option-1-${cartItem.productId}"
-                          data-delivery-date="${currentDate.add(7, 'day').format('dddd, MMMM D')}">
-                        <div>
-                          <div class="delivery-option-date">
-                            ${currentDate.add(7, 'day').format('dddd, MMMM D')}
-                          </div>
-                          <div class="delivery-option-price">
-                            FREE Shipping
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="delivery-option">
-                        <input type="radio"
-                          class="delivery-option-input"
-                          name="delivery-option-1-${cartItem.productId}"
-                          data-delivery-date="${currentDate.add(3, 'day').format('dddd, MMMM D')}">
-                        <div>
-                          <div class="delivery-option-date">
-                            ${currentDate.add(3, 'day').format('dddd, MMMM D')}
-                          </div>
-                          <div class="delivery-option-price">
-                            $4.99 - Shipping
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="delivery-option">
-                        <input type="radio"
-                          class="delivery-option-input"
-                          name="delivery-option-1-${cartItem.productId}"
-                          data-delivery-date="${currentDate.add(1, 'day').format('dddd, MMMM D')}">
-                        <div>
-                          <div class="delivery-option-date">
-                            ${currentDate.add(1, 'day').format('dddd, MMMM D')}
-                          </div>
-                          <div class="delivery-option-price">
-                            $9.99 - Shipping
-                          </div>
-                        </div>
-                      </div>
+                      ${deliveryOptionHTML(currentDate, cartItem.productId, cartItem.deliveryChoice)}
                     </div>
                   </div>
                 </div>
@@ -109,12 +67,11 @@ function renderCheckoutPage() {
     }
   });
   document.querySelector(".order-summary").innerHTML = orderSummaryHtml;
-  document.querySelector(".js-checkout-quantity").innerHTML = getCartLength();
+  updateCheckoutQuantity();
 }
 
 // Event listener for deleting item in cart in checkout page
 document.querySelector(".order-summary").addEventListener("click", (event) => {
-
   // For deleting item in order summary
   const deleteButton = event.target.closest(".js-delete-link");
   if (deleteButton) {
@@ -128,14 +85,14 @@ document.querySelector(".order-summary").addEventListener("click", (event) => {
     container.remove();
   }
 
-  // Updating delivery date for items
-  const dateButton = event.target.closest(".delivery-option-input");
-  if(dateButton){
-    updateDeliveryDates();
-  }
+    // Updating delivery date for items
+    const choice = event.target.closest(".delivery-option-input");
+    if(choice){
+      updateDeliveryDates(event);
+    }
 });
 
-function updateDeliveryDates(){
+function updateDeliveryDates(event=null){
   const containers = document.querySelectorAll('.cart-item-container');
   containers.forEach((container) => {
     const buttons = container.querySelectorAll('.delivery-option-input');
@@ -143,9 +100,12 @@ function updateDeliveryDates(){
     buttons.forEach((button) => {
       if(button.checked){
         const { deliveryDate } = button.dataset;
-        container.querySelector('.delivery-date').innerHTML = `Delivery data: ${deliveryDate}`;
+        container.querySelector('.delivery-date').innerHTML = `Delivery date: ${deliveryDate}`;
       }
     })
   })
-  console.log('date updated');
+}
+
+function updateCheckoutQuantity(){
+  document.querySelector(".js-checkout-quantity").innerHTML = getCartLength();
 }

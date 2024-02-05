@@ -14,6 +14,7 @@ export function addToCart(productId, productQuantity){
         let item = {
             productId,
             quantity: productQuantity,
+            deliveryChoice : 1
         };
         cart.push(item);
         console.log(cart);
