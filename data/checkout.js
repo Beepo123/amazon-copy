@@ -85,14 +85,19 @@ document.querySelector(".order-summary").addEventListener("click", (event) => {
     container.remove();
   }
 
-    // Updating delivery date for items
-    const choice = event.target.closest(".delivery-option-input");
-    if(choice){
-      updateDeliveryDates(event);
-    }
+  // Updating delivery date for items
+  const choice = event.target.closest(".delivery-option") || null;
+  if(choice){
+    updateDeliveryDates(choice);
+  }
 });
 
-function updateDeliveryDates(event=null){
+function updateDeliveryDates(choice){
+  if(choice){
+    const input = choice.querySelector('.delivery-option-input');
+    input.checked = true;
+  }
+  
   const containers = document.querySelectorAll('.cart-item-container');
   containers.forEach((container) => {
     const buttons = container.querySelectorAll('.delivery-option-input');
