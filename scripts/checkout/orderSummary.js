@@ -1,15 +1,17 @@
-import { cart, deleteFromCart, getCartLength } from "./cart.js";
-import { products } from "./products.js";
-import { centsToDollars } from "./utils/money.js";
+import { cart, deleteFromCart, getCartLength } from "../../data/cart.js";
+import { products } from "../../data/products.js";
+import { centsToDollars } from "../../data/utils/money.js";
+import { deliveryOptionHTML } from "../../data/utils/deliveryOptions.js";
+import { renderPaymentSummary } from "./paymentSummary.js";
+
 import  dayjs  from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { deliveryOptionHTML } from "./utils/deliveryOptions.js";
 
 document.addEventListener('DOMContentLoaded', ()=>{
   renderCheckoutPage();
   updateDeliveryDates();
 })
 
-function renderCheckoutPage() {
+export function renderCheckoutPage() {
   const currentDate = dayjs();
   let orderSummaryHtml = "";
   cart.forEach((cartItem) => {
@@ -97,7 +99,7 @@ function updateDeliveryDates(choice){
     const input = choice.querySelector('.delivery-option-input');
     input.checked = true;
   }
-  
+
   const containers = document.querySelectorAll('.cart-item-container');
   containers.forEach((container) => {
     const buttons = container.querySelectorAll('.delivery-option-input');
@@ -109,6 +111,7 @@ function updateDeliveryDates(choice){
       }
     })
   })
+  renderPaymentSummary();
 }
 
 function updateCheckoutQuantity(){

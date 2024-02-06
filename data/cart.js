@@ -38,4 +38,18 @@ export function getCartLength(){
       totalItems += product.quantity;
     })
     return totalItems;
-  }
+}
+
+export function getCartTotal(products){
+    let cartTotal = 0;
+    cart.forEach(cartItem => {
+        for(let i = 0; i < products.length; i++){
+            if(cartItem.productId === products[i].id){
+                let total = products[i].priceCents * cartItem.quantity;
+                cartTotal += Number((total/100).toFixed(2));
+                break;
+            }
+        }
+    })
+    return Number(cartTotal.toFixed(2));
+}
