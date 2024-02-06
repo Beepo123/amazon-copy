@@ -1,20 +1,49 @@
-import { products } from "../../data/products.js";
-import { getCartTotal } from "../../data/cart.js";
+import { getCartLength, getCartTotal } from "../../data/cart.js";
 import { calculate } from "../../data/utils/money.js";
 
 export function renderPaymentSummary(){
     // Calculates values first and render them in page
-    const cartTotal = getCartTotal(products);
+    const cartTotal = getCartTotal();
     const shippingTotal = getShippingTotal();
     const totalBeforeTax = calculate(cartTotal, shippingTotal);
     const estimatedTax = calculate(totalBeforeTax, 0.1, "*");
     const orderTotal = calculate(totalBeforeTax, estimatedTax);
     
-    const moneyValues = [cartTotal, shippingTotal, totalBeforeTax, estimatedTax, orderTotal];
-    const paymentSummaryMoney = document.querySelectorAll('.payment-summary-money');
-    moneyValues.forEach((value, index) => {
-        paymentSummaryMoney[index].innerHTML = `$${value}`;
-    })
+    const html = `
+        <div class="payment-summary-title">
+            Order Summary
+        </div>
+
+        <div class="payment-summary-row">
+            <div>Items (${getCartLength()}):</div>
+            <div class="payment-summary-money">$${cartTotal}</div>
+        </div>
+
+        <div class="payment-summary-row">
+            <div>Shipping &amp; handling:</div>
+            <div class="payment-summary-money">$${shippingTotal}</div>
+        </div>
+
+        <div class="payment-summary-row subtotal-row">
+            <div>Total before tax:</div>
+            <div class="payment-summary-money">$${totalBeforeTax}</div>
+        </div>
+
+        <div class="payment-summary-row">
+            <div>Estimated tax (10%):</div>
+            <div class="payment-summary-money">$${estimatedTax}</div>
+        </div>
+
+        <div class="payment-summary-row total-row">
+            <div>Order total:</div>
+            <div class="payment-summary-money">$${orderTotal}</div>
+        </div>
+
+        <button class="place-order-button button-primary">
+            Place your order
+        </button>
+    `
+    document.querySelector('.js-payment-summary').innerHTML = html;
 }
 
 function getShippingTotal(){

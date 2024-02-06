@@ -1,3 +1,6 @@
+import { getProduct } from "./products.js";
+import { centsToDollars } from "./utils/money.js";
+
 export const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 export function addToCart(productId, productQuantity){
@@ -40,16 +43,12 @@ export function getCartLength(){
     return totalItems;
 }
 
-export function getCartTotal(products){
+export function getCartTotal(){
     let cartTotal = 0;
     cart.forEach(cartItem => {
-        for(let i = 0; i < products.length; i++){
-            if(cartItem.productId === products[i].id){
-                let total = products[i].priceCents * cartItem.quantity;
-                cartTotal += Number((total/100).toFixed(2));
-                break;
-            }
-        }
+        const product = getProduct(cartItem);
+        let total = product.priceCents * cartItem.quantity;
+        cartTotal += centsToDollars(total);
     })
     return Number(cartTotal.toFixed(2));
 }

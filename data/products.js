@@ -1,3 +1,11 @@
+export function getProduct(cartItem){
+  for(let i = 0; i < products.length; i++){
+    if(cartItem.productId === products[i].id){
+        return products[i];
+    }
+  }
+}
+
 export const products = [
   {
     id: "123h1k3h12uh3",
