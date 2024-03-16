@@ -64,5 +64,6 @@ function getShippingTotal(){
             }
         });
     
+    console.log(`shipping total: ${shippingTotal}`)
     return shippingTotal;
 }

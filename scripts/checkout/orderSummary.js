@@ -114,7 +114,6 @@ function updateDeliveryDates(choice){
         cart[index].deliveryDate = deliveryDate;
       }
     })
-    console.log(cart);
   })
   renderPaymentSummary();
 }

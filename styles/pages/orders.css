@@ -84,13 +84,15 @@
     grid-template-columns: auto 1fr;
   }
 }
+.container-grid{
+  display: grid;
+  border: 1px solid rgb(213, 217, 217);
+}
 
 .order-details-grid {
   padding: 40px 25px;
-  border: 1px solid rgb(213, 217, 217);
+  border-bottom: 1px solid rgb(213, 217, 217);
   border-top: none;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
 
   display: grid;
   grid-template-columns: 110px 1fr 220px;

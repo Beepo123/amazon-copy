@@ -20,7 +20,6 @@ export function addToCart(productId, productQuantity){
             deliveryChoice : 1
         };
         cart.push(item);
-        console.log(cart);
     }
     localStorage.setItem('cart', JSON.stringify(cart));
 }
@@ -51,4 +50,9 @@ export function getCartTotal(){
         cartTotal += centsToDollars(total);
     })
     return Number(cartTotal.toFixed(2));
+}
+
+export function clearCart(){
+    cart.length = 0;
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
