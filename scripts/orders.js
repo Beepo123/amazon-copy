@@ -1,8 +1,9 @@
 import { orderHistory } from "../data/orderedCart.js";
-import { getCartTotal } from "../data/cart.js";
+import { getCartLength } from "../data/cart.js";
 
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 
+updateCartQuantity();
 generateOrdersPage();
 
 function generateOrdersPage() {
@@ -74,4 +75,8 @@ function generateOrderHeader(historyArray) {
     `;
 
   return html;
+}
+
+function updateCartQuantity(){
+  document.querySelector('.cart-quantity').innerHTML = getCartLength();
 }

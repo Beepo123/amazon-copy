@@ -109,9 +109,6 @@ function updateDeliveryDates(choice){
       if(button.checked){
         const { deliveryDate } = button.dataset;
         container.querySelector('.delivery-date').innerHTML = `Delivery date: ${deliveryDate}`;
-
-        // add delivery date to cart property value
-        cart[index].deliveryDate = deliveryDate;
       }
     })
   })
