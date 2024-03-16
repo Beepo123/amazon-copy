@@ -16,7 +16,7 @@ function generateOrdersPage() {
       const html = `
         <div class="order-details-grid">
           <div class="product-image-container">
-            <img src="../${orderedItem.image}">
+            <img src="${orderedItem.image}">
           </div>
 
           <div class="product-details">
@@ -77,6 +77,6 @@ function generateOrderHeader(historyArray) {
   return html;
 }
 
-function updateCartQuantity(){
-  document.querySelector('.cart-quantity').innerHTML = getCartLength();
+function updateCartQuantity() {
+  document.querySelector(".cart-quantity").innerHTML = getCartLength();
 }
