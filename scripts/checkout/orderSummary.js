@@ -34,7 +34,7 @@ export function renderCheckoutPage() {
                     ${product.name}
                   </div>
                   <div class="product-price">
-                  ${centsToDollars(product.priceCents)}
+                  $${centsToDollars(product.priceCents)}
                   </div>
                   <div class="product-quantity">
                     <span>
@@ -105,12 +105,16 @@ function updateDeliveryDates(choice){
   containers.forEach((container) => {
     const buttons = container.querySelectorAll('.delivery-option-input');
     
-    buttons.forEach((button) => {
+    buttons.forEach((button, index) => {
       if(button.checked){
         const { deliveryDate } = button.dataset;
         container.querySelector('.delivery-date').innerHTML = `Delivery date: ${deliveryDate}`;
+
+        // add delivery date to cart property value
+        cart[index].deliveryDate = deliveryDate;
       }
     })
+    console.log(cart);
   })
   renderPaymentSummary();
 }

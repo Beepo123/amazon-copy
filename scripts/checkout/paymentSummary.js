@@ -1,6 +1,7 @@
 import { getCartLength, getCartTotal } from "../../data/cart.js";
 import { calculate } from "../../data/utils/money.js";
 
+
 export function renderPaymentSummary(){
     // Calculates values first and render them in page
     const cartTotal = getCartTotal();
@@ -39,9 +40,11 @@ export function renderPaymentSummary(){
             <div class="payment-summary-money">$${orderTotal}</div>
         </div>
 
-        <button class="place-order-button button-primary">
-            Place your order
-        </button>
+        <a href="orders.html">
+            <button class="place-order-button js-place-order-button button-primary">
+                Place your order
+            </button>
+        </a>
     `
     document.querySelector('.js-payment-summary').innerHTML = html;
 }
